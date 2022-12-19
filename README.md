@@ -9,9 +9,10 @@ Test aluxion. Api rest for upload and download archives/imgs using node js, aws 
 ## Technologies
 ***
 A list of technologies used within the project:
-* [Technologie name](https://example.com): Version 12.3 
-* [Technologie name](https://example.com): Version 2.34
-* [Library name](https://example.com): Version 1234
+* [Node]([https://nodejs.org/en/])
+* [Mongo Db](https://www.mongodb.com/es)
+* [Sendgrid](https://sendgrid.com/)
+* [Unplash](https://unsplash.com/)
 ## Installation
 ***
 A little intro about the installation. 
