@@ -24,6 +24,7 @@ $ cd ../path/to/the/project
 $ git checkout develop
 $ git pull
 $ npm install
+$ SET VARS IN .ENV
 $ node app.js
 ```
 
