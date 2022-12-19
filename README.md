@@ -1,4 +1,4 @@
-###TEST ALUXION BACKEND
+#TEST ALUXION BACKEND
 
 ## Table of Contents
 1. [General Info](#general-info)
@@ -26,3 +26,11 @@ $ git pull
 $ npm install
 $ node app.js
 ```
+
+## Documentation
+$ node app.js
+http://localhost:5000/api-docs/
+
+OR
+
+import api-test.json in the root for your app https request favorite
