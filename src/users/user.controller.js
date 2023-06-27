@@ -58,6 +58,9 @@ exports.Signup = async (req, res) => {
     }
     result.value.emailToken = code;
     result.value.emailTokenExpires = new Date(expiry);
+
+    result.value.active = true;
+
     const newUser = new User(result.value);
     await newUser.save();
     return res.status(200).json({
@@ -125,6 +128,7 @@ exports.Login = async (req, res) => {
         success: true,
         message: "User logged in successfully",
         accessToken: token,  //Send it to the client
+        user: user
        });
     } catch (err) {
       console.error("Login error", err);
@@ -299,7 +303,7 @@ exports.Upload = async (req, res) => {
   });
 
   var s3 = new AWS.S3();
-  const { id } = req.decoded;
+  //const { id } = req.decoded;
  
   try {
     
@@ -330,13 +334,13 @@ exports.Upload = async (req, res) => {
           if (data) {
             const id_archive = uuid();
             console.log("Uploaded in:", data.Location);
-            const newUser = new Archive({
+            /* const newUser = new Archive({
               archiveId: id_archive,
               userId: id,
               url: data.Location
             });
-            await newUser.save();
-            return res.send({ success: true, message: "Upload success" });
+            await newUser.save(); */
+            return res.send({ success: true, message: "Upload success", url: data.Location });
           }
         });
     })
@@ -480,6 +484,46 @@ exports.Search = async (req, res) => {
   } catch (error) {
     console.error("user-archives-error", error);
     return res.stat(500).json({
+      error: true,
+      message: error.message,
+    });
+  }
+};
+
+//update a user
+exports.Update = async (req, res) => {
+  try {
+    const { userId, name, birth, country, lang, pic } = req.body;
+    if (name==null || birth==null || country==null || lang==null || pic==null) {
+      return res.json({
+        error: true,
+        status: 400,
+        message: "Please make a valid request",
+      });
+    }
+    const { id } = req.decoded;
+    let user = await User.findOne({ userId: id });
+    if (!user) {
+      return res.status(400).json({
+        error: true,
+        message: "Invalid details",
+      });
+    } else {
+      user.name = name;
+      user.birth = birth;
+      user.country = country;
+      user.lang = lang;
+      user.pic = pic;
+      await user.save();
+      return res.status(200).json({
+        success: true,
+        message: "Account updated.",
+        user: user
+      });
+    }
+  } catch (error) {
+    console.error("update-error", error);
+    return res.status(500).json({
       error: true,
       message: error.message,
     });

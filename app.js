@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fileUpload = require('express-fileupload');
 require("dotenv").config();
-const PORT = 5000;
+const PORT = 8080;
 
 //mongo connection
 mongoose.connect(process.env.MONGO_URI, {

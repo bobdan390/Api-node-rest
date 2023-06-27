@@ -137,7 +137,7 @@ router.get("/logout", validateToken, AuthController.Logout);
  *               type: json
  *               schemma: 
  */
-router.post("/upload", validateToken, AuthController.Upload);
+router.post("/upload", cleanBody, AuthController.Upload);
 
 /**
  * @swagger
@@ -215,4 +215,25 @@ router.get("/getUrl/:id", validateToken, AuthController.getUrl);
  *               schemma: 
  */
 router.post("/search", validateToken, AuthController.Search);
+
+/**
+ * @swagger
+ * /users/update:   
+ *   post:  
+ *       summary: update a user
+ *       description: Use for update the users
+ *       produces: 
+ *           - application/json
+ *       parameters: 
+ *           -in: body
+ *           name: email
+ *           description: a field
+ *       responses:
+ *           200:
+ *               description: Request success
+ *               type: json
+ *               schemma: 
+ */
+ router.post("/update", validateToken, AuthController.Update);
+
 module.exports = router;

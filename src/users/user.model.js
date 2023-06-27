@@ -14,7 +14,13 @@ const userSchema = new Schema(
     resetPasswordExpires: { type: Date, default: null },
     emailToken: { type: String, default: null },
     emailTokenExpires: { type: Date, default: null },
-    accessToken: { type: String, default: null }
+    accessToken: { type: String, default: null },
+
+    name: { type: String, default: null },
+    birth: { type: String, default: null },
+    country: { type: String, default: null },
+    lang: { type: String, default: null },
+    pic: { type: String, default: null }
   },
   {
     timestamps: {
