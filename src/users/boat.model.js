@@ -18,7 +18,10 @@ const boatSchema = new Schema(
     vessel_name : { type: String, unique: false, required: false },
     home_port : { type: String, unique: false, required: false },
     location : { type: String, unique: false, required: false },
-    published : { type: String, unique: false, required: false }
+    published : { type: String, unique: false, required: false },
+    name : { type: String, unique: false, required: false },
+    locationContact : { type: String, unique: false, required: false },
+    phone : { type: String, unique: false, required: false }
   },
   {
     timestamps: {

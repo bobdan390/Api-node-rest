@@ -550,7 +550,10 @@ exports.Saveboat = async (req, res) => {
       vessel_name,
       home_port,
       location,
-      published 
+      published,
+      name,
+      locationContact,
+      phone 
     } = req.body;
 
     if (userId==null) {
@@ -584,7 +587,10 @@ exports.Saveboat = async (req, res) => {
         vessel_name : vessel_name,
         home_port : home_port,
         location : location,
-        published : published
+        published : published,
+        name : name,
+        locationContact : locationContact,
+        phone : phone
       });
       await boat.save();
 
