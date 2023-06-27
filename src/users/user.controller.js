@@ -4,6 +4,7 @@ const { v4: uuid } = require("uuid");
 const { sendEmail } = require("./helpers/mailer");
 const User = require("./user.model");
 const Archive = require("./archive.model.js");
+const Boat = require("./boat.model.js");
 const { generateJwt } = require("./helpers/generateJwt");
 
 const AWS  = require('aws-sdk');
@@ -428,7 +429,7 @@ exports.Archives = async (req, res) => {
   try {
     
     const { id } = req.decoded;
-    let archives = await Archive.find({ userId: id });
+    let archives = await Boat.find({ userId: id });
 
     return res.status(200).json({
       success: true,
@@ -523,6 +524,77 @@ exports.Update = async (req, res) => {
     }
   } catch (error) {
     console.error("update-error", error);
+    return res.status(500).json({
+      error: true,
+      message: error.message,
+    });
+  }
+};
+
+
+//transfer img from aby url
+exports.Saveboat = async (req, res) => {
+  try {
+    const { 
+      userId, 
+      pic, 
+      make, 
+      model, 
+      length, 
+      unit_lenght,
+      year,
+      boat_type,
+      boat_material,
+      price,
+      unit_price,
+      vessel_name,
+      home_port,
+      location,
+      published 
+    } = req.body;
+
+    if (userId==null) {
+      return res.json({
+        error: true,
+        status: 400,
+        message: "Please make a valid request asdasd",
+      });
+    }
+    const { id } = req.decoded;
+    let user = await User.findOne({ userId: id });
+    if (!user) {
+      return res.status(400).json({
+        error: true,
+        message: "Invalid details",
+      });
+    } else {
+      
+      const boat = new Boat({
+        userId: id,
+        pic: pic,
+        make: make,
+        model : model,
+        length : length,
+        unit_lenght : unit_lenght,
+        year : year,
+        boat_type : boat_type,
+        boat_material : boat_material,
+        price : price,
+        unit_price : unit_price,
+        vessel_name : vessel_name,
+        home_port : home_port,
+        location : location,
+        published : published
+      });
+      await boat.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Boat save."
+      });
+    }
+  } catch (error) {
+    console.error("save-error", error);
     return res.status(500).json({
       error: true,
       message: error.message,
