@@ -536,7 +536,6 @@ exports.Update = async (req, res) => {
 exports.Saveboat = async (req, res) => {
   try {
     const { 
-      userId, 
       pic, 
       make, 
       model, 
@@ -556,13 +555,6 @@ exports.Saveboat = async (req, res) => {
       phone 
     } = req.body;
 
-    if (userId==null) {
-      return res.json({
-        error: true,
-        status: 400,
-        message: "Please make a valid request asdasd",
-      });
-    }
     const { id } = req.decoded;
     let user = await User.findOne({ userId: id });
     if (!user) {
