@@ -1,9 +1,7 @@
 //Generate JWT token access
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const options = {
-  expiresIn: "1h",
-};
+const options = {};
 async function generateJwt(email, userId) {
   try {
     const payload = { email: email, id: userId };

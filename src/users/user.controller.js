@@ -5,6 +5,7 @@ const { sendEmail } = require("./helpers/mailer");
 const User = require("./user.model");
 const Archive = require("./archive.model.js");
 const Boat = require("./boat.model.js");
+const Item = require("./item.model.js");
 const { generateJwt } = require("./helpers/generateJwt");
 
 const AWS  = require('aws-sdk');
@@ -589,6 +590,56 @@ exports.Saveboat = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "Boat save."
+      });
+    }
+  } catch (error) {
+    console.error("save-error", error);
+    return res.status(500).json({
+      error: true,
+      message: error.message,
+    });
+  }
+};
+
+//save item
+exports.SaveItem = async (req, res) => {
+  try {
+    const { 
+      data, 
+      type, 
+      id_temp 
+    } = req.body;
+
+    const { id } = req.decoded;
+    let user = await User.findOne({ userId: id });
+    if (!user) {
+      return res.status(400).json({
+        error: true,
+        message: "Invalid details",
+      });
+    } else {
+
+      let item = await User.Item({ 
+        userId: id,
+        type: type,
+        id_temp: id_temp
+      });
+
+      if(item){
+        item.data = data;
+        await item.save();
+      }else{
+        const newItem = new Item({
+          userId: id,
+          data: data,
+          type: type,
+          id_temp: id_temp
+        });
+        await newItem.save();
+      }
+      return res.status(200).json({
+        success: true,
+        message: "Item " + (item ? " edited." : "save.")
       });
     }
   } catch (error) {
