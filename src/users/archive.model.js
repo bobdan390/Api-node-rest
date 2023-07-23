@@ -7,6 +7,7 @@ const userSchema = new Schema(
     archiveId: { type: String, unique: true, required: true },
     userId: { type: String, unique: false, required: true },
     url: { type: String, required: true, unique: false },
+    id_temp: { type: String, unique: false, required: true }
   },
   {
     timestamps: {

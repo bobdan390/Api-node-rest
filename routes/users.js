@@ -257,5 +257,25 @@ router.post("/search", validateToken, AuthController.Search);
  */
  router.post("/saveboat", validateToken, AuthController.Saveboat);
 
+ /**
+ * @swagger
+ * /users/saveitem:   
+ *   post:  
+ *       summary: save
+ *       description: Use for save items
+ *       produces: 
+ *           - application/json
+ *       parameters: 
+ *           -in: body
+ *           name: userId
+ *           description: a field
+ *       responses:
+ *           200:
+ *               description: Request success
+ *               type: json
+ *               schemma: 
+ */
+  router.post("/saveitem", validateToken, AuthController.SaveItem);
+
 
 module.exports = router;
