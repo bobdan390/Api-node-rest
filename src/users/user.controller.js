@@ -619,7 +619,7 @@ exports.SaveItem = async (req, res) => {
       });
     } else {
 
-      let item = await User.findOne({ 
+      let item = await Item.findOne({ 
         userId: id,
         type: type,
         id_temp: id_temp
