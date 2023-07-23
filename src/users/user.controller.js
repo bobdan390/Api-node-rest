@@ -607,11 +607,11 @@ exports.SaveItem = async (req, res) => {
     const { 
       data, 
       type, 
-      id_temp 
+      id_temp,
+      userId
     } = req.body;
 
-    const { id } = req.decoded;
-    let user = await User.findOne({ userId: id });
+    let user = await User.findOne({ userId: userId });
     if (!user) {
       return res.status(400).json({
         error: true,
@@ -620,7 +620,7 @@ exports.SaveItem = async (req, res) => {
     } else {
 
       let item = await Item.findOne({ 
-        userId: id,
+        userId: userId,
         type: type,
         id_temp: id_temp
       });
@@ -630,7 +630,7 @@ exports.SaveItem = async (req, res) => {
         await item.save();
       }else{
         const newItem = new Item({
-          userId: id,
+          userId: userId,
           data: data,
           type: type,
           id_temp: id_temp

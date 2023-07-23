@@ -275,7 +275,7 @@ router.post("/search", validateToken, AuthController.Search);
  *               type: json
  *               schemma: 
  */
-  router.post("/saveitem", validateToken, AuthController.SaveItem);
+  router.post("/saveitem", cleanBody, AuthController.SaveItem);
 
 
 module.exports = router;
