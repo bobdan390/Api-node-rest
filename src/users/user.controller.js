@@ -65,9 +65,23 @@ exports.Signup = async (req, res) => {
 
     const newUser = new User(result.value);
     await newUser.save();
+
+    //Generate Access token
+    const { error, token } = await generateJwt(newUser.email, newUser.userId);
+    if (error) {
+      return res.status(500).json({
+        error: true,
+        message: "Couldn't create access token. Please try again later",
+      });
+    }
+    newUser.accessToken = token;
+
+    await newUser.save();
+
     return res.status(200).json({
       success: true,
       message: "Registration Success",
+      user: newUser
     });
   } catch (error) {
     console.error("signup-error", error);
