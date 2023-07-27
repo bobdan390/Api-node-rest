@@ -53,10 +53,10 @@ exports.Signup = async (req, res) => {
     let expiry = Date.now() + 60 * 1000 * 15;  //Set expiry 15 mins ahead from now
     const sendCode = await sendEmail(result.value.email, code);
     if (sendCode.error) {
-      return res.status(500).json({
+      /*return res.status(500).json({
         error: true,
         message: "Couldn't send verification email.",
-      });
+      });*/
     }
     result.value.emailToken = code;
     result.value.emailTokenExpires = new Date(expiry);
